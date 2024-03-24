@@ -13,32 +13,11 @@ function getBuiltWithInfo(apiKey, domain) {
 }
 
 function getSpendOnTech(Response) {
-    let spend = Response.Results[0].Result.Spend;
-    return spend
+  if (Response.Results[0] && Response.Results[0].Result.Spend) {
+      return Response.Results[0].Result.Spend;
+  } else {
+    return "unknown";
+  }
 }
-
-// function extractTechnologies(apiResponse) {
-
-    
-//     let technologyNames = [];
-
-//     if (apiResponse.Results[0] && apiResponse.Results[0].length > 0) {
-//         apiResponse.Results[0].forEach(result => {
-//             if (result.Result && result.Result.Paths) {
-//                 result.Result.Paths.forEach(path => {
-//                     if (path.Technologies) {
-//                         path.Technologies.forEach(tech => {
-//                             technologyNames.push(tech.Name);
-//                         });
-//                     }
-//                 });
-//             }
-//         });
-//     }
-    
-//     return technologyNames;
-// }
-
-
 
 module.exports = { getBuiltWithInfo, getSpendOnTech};

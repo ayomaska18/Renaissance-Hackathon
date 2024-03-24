@@ -11,8 +11,6 @@ const getWhoHostThisData = (apiKey, domainName, options = {}) => {
 
     const url = `https://www.who-hosts-this.com/API/Host?${queryString}`;
 
-    console.log(url);
-
     return axios.get(url)
       .then(response => response.data)
       .catch(error => {
@@ -21,7 +19,7 @@ const getWhoHostThisData = (apiKey, domainName, options = {}) => {
       });
   }
 
-function getCreationDate(response) {
+function getWebHosting(response) {
     if (response.results && response.results[0].isp_name) {
         return response.results[0].isp_name;
     } else {
@@ -29,4 +27,4 @@ function getCreationDate(response) {
     }
 }
 
-module.exports = { getWhoHostThisData, getCreationDate };
+module.exports = { getWhoHostThisData, getWebHosting };

@@ -11,8 +11,6 @@ const getWhoIsData = (apiKey, domainName, options = {}) => {
 
     const url = `https://www.whoisxmlapi.com/whoisserver/WhoisService?${queryString}`;
 
-    console.log(url);
-
     return axios.get(url)
       .then(response => response.data)
       .catch(error => {
@@ -22,19 +20,19 @@ const getWhoIsData = (apiKey, domainName, options = {}) => {
   };
 
 function getCreationDate(response) {
-    if (response.WhoisRecord && response.WhoisRecord.createdDate) {
-        return response.WhoisRecord.createdDate;
+    if (response.WhoisRecord.registryData && response.WhoisRecord.registryData.createdDate) {
+        return response.WhoisRecord.registryData.createdDate;
     } else {
         return "unknown";
     }
 }
 
 function getCompanyLocation(response) {
-    if (response.WhoisRecord && response.WhoisRecord.registrant && response.WhoisRecord.registrant.country) {
-        return response.WhoisRecord.registrant.country;
+    if (response.WhoisRecord.registryData && response.WhoisRecord.registryData.registrant && response.WhoisRecord.registryData.registrant.country) {
+        return response.WhoisRecord.registryData.registrant.country;
     } else {
         return "unknown";
     }
 }
 
-module.exports = { getWhoIsData, getCreationDate };
+module.exports = { getWhoIsData, getCreationDate, getCompanyLocation };
