@@ -10,15 +10,12 @@ const analyzeWalletBalance = require('./walletAnalysis/analyzeWalletBalance');
 
 const app = express();
 
-let builtWithApi = 'cc1a9553-05bb-4e85-aecb-ec632b8eeb61';
-let whoIsApi = 'at_glpSyChrGsNjta2IX8x9tOP6l7IDC'
-let whoHostApi = 'wo0hx9ze9uo5x2ok22ktfgrunesnxrptrb0mb67udeoi4hfay4dvyehe6w2insj44rgpjm'
+let builtWithApi = 'b6e9dd13-73f1-46a9-9ab0-1ea7fe1f9385';
+let whoIsApi = 'at_glpSyChrGsNjta2IX8x9tOP6l7IDC';
+let whoHostApi = 'wo0hx9ze9uo5x2ok22ktfgrunesnxrptrb0mb67udeoi4hfay4dvyehe6w2insj44rgpjm';
+let solTestNetAddress = 'HpWC6RNZYa9Q5E5fqBoeAfZvGHMMw1xLN4izUKErSsTh';
 
-let url = 'https://dydx.exchange/'
-
-// app.get("/", function (req, res) {
-//   res.send("Hello World!");
-// });
+let url = 'https://www.facebook.com/';
 
 async function init() {
   try {
@@ -34,14 +31,22 @@ async function init() {
 
     const whoHostdata = await whoHostService.getWhoHostThisData( whoHostApi, url)
     const webHostingData = whoHostService.getWebHosting(whoHostdata);
-  
+
+    console.log("-----------------")
+    console.log("Project Analysis");
+    console.log("-----------------")
+    console.log("Web Analysis:", url);
     console.log("Tech Investments Monthly:", techSpendData);
     console.log("Web Creation Date:", webCreationDateData);
     console.log("Company Location:", companyLocation);
     console.log("SSL labs Trust Grade:", sslTrustGrade);
     console.log("Web Hosting Provider:", webHostingData);
+    console.log("-----------------")
+    console.log("Wallet Analysis");
+    console.log("-----------------")
+    console.log('Address:', solTestNetAddress);
 
-    analyzeWalletVolume.getBlockTimes('3dRcbVsfijKjXv5zHEoRLY89NU7sU3KYEfuU8Kywb3iu')
+    analyzeWalletVolume.getBlockTimes(solTestNetAddress)
     .then(async blockTimes => {
         const counts = analyzeWalletVolume.countDatesForMostRecentMonth(blockTimes);
         const activityRating = analyzeWalletVolume.checkRecentMonthWalletActivity(counts);
@@ -49,8 +54,11 @@ async function init() {
     })
     .catch(err => console.error(err));
 
-    const walletBalance = analyzeWalletBalance.getTokenBalance('HpWC6RNZYa9Q5E5fqBoeAfZvGHMMw1xLN4izUKErSsTh');
-    console.log(walletBalance);
+    analyzeWalletBalance.getTokenBalance(solTestNetAddress)
+    .then(walletBalance => {
+    })
+    .catch(err => console.error(err));
+
 
   } catch (error) {
     console.error('Failed to fetch data:', error);

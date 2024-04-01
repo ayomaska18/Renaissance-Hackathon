@@ -28,8 +28,8 @@ function getCreationDate(response) {
 }
 
 function getCompanyLocation(response) {
-    if (response.WhoisRecord.registryData && response.WhoisRecord.registryData.registrant && response.WhoisRecord.registryData.registrant.country) {
-        return response.WhoisRecord.registryData.registrant.country;
+    if (response.WhoisRecord && response.WhoisRecord.registrant && response.WhoisRecord.registrant.country) {
+        return response.WhoisRecord.registrant.country;
     } else {
         return "unknown";
     }

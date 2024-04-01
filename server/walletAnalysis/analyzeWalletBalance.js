@@ -2,7 +2,7 @@ const solanaWeb3 = require('@solana/web3.js');
 const { TOKEN_PROGRAM_ID } = require("@solana/spl-token");
 
 async function getWalletBalance(walletAddress) {
-    const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+    const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('testnet'), 'confirmed');
     const publicKey = new solanaWeb3.PublicKey(walletAddress);
 
     try {
@@ -36,12 +36,12 @@ async function getTokenBalance(walletAddress) {
         { filters, encoding: 'jsonParsed' }
     );
 
-    console.log(`Found ${accounts.length} token account(s) for wallet ${walletAddress}.`);
+    console.log(`Found ${accounts.length} token account(s) for wallet.`);
     accounts.forEach((account, i) => {
         const parsedAccountInfo = account.account.data.parsed;
         const mintAddress = parsedAccountInfo.info.mint;
         const tokenBalance = parsedAccountInfo.info.tokenAmount.uiAmount;
-        console.log(`Token Account No. ${i + 1}: ${account.pubkey.toString()}`);
+        // console.log(`Token Account No. ${i + 1}: ${account.pubkey.toString()}`);
         console.log(`--Token Mint: ${mintAddress}`);
         console.log(`--Token Balance: ${tokenBalance}`);
     });

@@ -2,7 +2,7 @@ const solanaWeb3 = require('@solana/web3.js');
 const moment = require('moment');
 
 async function getBlockTimes(walletAddress) {
-    const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('mainnet-beta'), 'confirmed');
+    const connection = new solanaWeb3.Connection(solanaWeb3.clusterApiUrl('testnet'), 'confirmed');
     const publicKey = new solanaWeb3.PublicKey(walletAddress);
 
     
