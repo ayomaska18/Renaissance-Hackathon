@@ -20,26 +20,29 @@ async function getStakingActivities(walletAddress) {
         },
     ];
 
+    let seenAccounts = new Set();
+
     try {
-        let stakeAccounts = [];
         for (let filter of stakeAccountFilters) {
             const accounts = await connection.getParsedProgramAccounts(
                 solanaWeb3.StakeProgram.programId,
                 { filters: [filter] }
             );
-            stakeAccounts = stakeAccounts.concat(accounts);
-        }
+            
 
-        stakeAccounts.forEach((account, index) => {
-            console.log(`Stake Account ${index + 1}: ${account.pubkey.toString()}`);
+        accounts.forEach((account, index) => {
+            if (!seenAccounts.has(account.pubkey.toString())) {
+                seenAccounts.add(account.pubkey.toString());
+            
             const info = account.account.data.parsed.info;
+            console.log(`Stake Account ${index + 1}: ${account.pubkey.toString()}`);
             console.log(`Stake Authority: ${info.meta.authorized.staker}`);
             console.log(`Withdraw Authority: ${info.meta.authorized.withdrawer}`);
-            console.log(`Current Stake: ${info.stake.delegation.stake}`);
+            console.log(`Current Stake: ${(info.stake.delegation.stake /solanaWeb3.LAMPORTS_PER_SOL).toFixed(2)} SOL`);
             console.log(`Delegated Vote Account Address: ${info.stake.delegation.voter}`);
-            console.log('---');
-        });
-
+                }
+            });
+        }
     } catch (error) {
         console.error('Failed to fetch staking activities:', error);
     }
